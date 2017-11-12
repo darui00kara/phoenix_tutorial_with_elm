@@ -10,6 +10,9 @@ import Message exposing (Message)
 
 -- main
 main =
+  div [] [ h2 [] [ text "Hello, elm!" ] ]
+
+{--
   Html.program
     { init = init
     , view = view
@@ -36,4 +39,5 @@ view model =
 subscriptions : Model -> Sub Message
 subscriptions model =
   Sub.none
+--}
 
