@@ -37,13 +37,23 @@ exports.config = {
   // Phoenix paths configuration
   paths: {
     // Dependencies and current project directories to watch
-    watched: ["static", "css", "js", "vendor"],
+    watched: ["static", "css", "js", "vendor", "vendor/elm"],
     // Where to compile files to
     public: "../priv/static"
   },
 
   // Configure your plugins
   plugins: {
+    elmBrunch: {
+      // brunch-config.js root relative path
+      elmFolder: "vendor/elm",
+      // elm directory relative path
+      mainModules: ["src/Web.elm"],
+      // elm directory relative path
+      outputFolder: "output",
+      // [outputFolder]/[output_name]
+      outputFile: "elm.js"
+    },
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/vendor/]

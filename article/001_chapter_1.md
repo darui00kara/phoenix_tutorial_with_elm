@@ -63,6 +63,8 @@ $ cd phoenix_tutorial_with_elm
 $ mix ecto.create
 
 $ mix phx.server
+
+-> Let's accsess: http://localhost:4000
 ```
 
 ## Git! Git! Managed by git
@@ -87,7 +89,7 @@ $ git push -u origin master
 Githubのリポジトリはご自身で構築をお願いいたします。
 ```
 
-## Collaboration Elm
+## With Elm
 
 ElmをPhoenixから呼び出せるように設定をしていきましょう。
 まずはbrunchから扱うためにelm-brunchをインストールします。
@@ -157,11 +159,10 @@ Success! Compiled 37 modules.
 
 $ mkdir src
 $ mkdir output
-$ ls
-elm-package.json	elm-stuff		src
 ```
 
-`source-directories`を先ほどのソースディレクトリに変更します。
+先ほど、作成したディレクトリがソースディレクトリとなるように設定を変更します。
+`source-directories`を変更します。
 
 ```json
 {
@@ -213,36 +214,6 @@ Elmのメインモジュールを作成していきましょう。
 ```elm
 [assets/vendor/elm/src/Web.elm]
 
-module Web exposing (main)
-
-import Html    exposing (Html, program, div, text)
-import Model   exposing (Model, new)
-import Message exposing (Message)
-
-main =
-  Html.program
-    { init = init
-    , view = view
-    , update = update
-    , subscriptions = subscriptions
-    }
-
-init : ( Model, Cmd Message )
-init =
-  ( Model.new, Cmd.none )
-
-update : Message -> Model -> ( Model, Cmd Message )
-update message model =
-  ( model, Cmd.none )
-
-view : Model -> Html Message
-view model =
-  div [] [ text "Hello, elm!" ]
-
-subscriptions : Model -> Sub Message
-subscriptions model =
-  Sub.none
-
 ```
 
 ModelとMessageのモジュールは自分で作らないといけないので作成します。
@@ -250,27 +221,10 @@ ModelとMessageのモジュールは自分で作らないといけないので�
 ```elm
 [assets/vendor/elm/Model.elm]
 
-module Model exposing (Model, new)
-
-type alias Model =
-  { isDebug : Bool
-  , message : Maybe String
-  }
-
-new : Model
-new =
-  Model
-    False   -- isDebug
-    Nothing -- message
-
 ```
 
 ```elm
 [assets/vendor/elm/Message.elm]
-
-module Message exposing (Message, Message(..))
-
-type Message = Nothing
 
 ```
 
@@ -285,24 +239,11 @@ Successfully generated index.html
 ```javacrprit
 [assets/js/app.js]
 
-import "phoenix_html"
-
-// Elm embed
-const elmDiv = document.getElementById('elm-main')
-    , elmApp = Elm.Web.embed(elmDiv)
 ```
 
 ```html
 [lib/phoenix_tutorial_with_elm_web/templates/page/index.html.eex]
 
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
-
-<div id="elm-main"></div>
-
-...
 ```
 
 ## Extract
