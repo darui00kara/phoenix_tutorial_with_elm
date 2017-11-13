@@ -54,11 +54,11 @@ postgres=# \du (バックスラッシュdu)
 新しいPhoenixのプロジェクトを作成しましょう。
 
 ```cmd
-$ mix phx.new phoenix_tutorial_with_elm
+$ mix phx.new toy_app
 
 Fetch and install dependencies? [Yn] y
 
-$ cd phoenix_tutorial_with_elm
+$ cd toy_app
 
 $ mix ecto.create
 
@@ -81,7 +81,7 @@ $ git status
 
 $ git commit -m "[Add] Create application"
 
-$ git remote add origin https://github.com/[your github account]/phoenix_tutorial_with_elm.git
+$ git remote add origin https://github.com/[your github account]/toy_app.git
 
 $ git push -u origin master
 
@@ -99,7 +99,7 @@ $ cd assets
 $ npm install --save-dev elm-brunch
 ```
 
-一応、開発用の依存関係に入れたので、package.jsonに追加されていることを確認します。
+package.jsonの開発用依存関係に追加されていることを確認します。
 
 ```json
 [assets/package.json]
@@ -130,15 +130,15 @@ $ npm install --save-dev elm-brunch
 Phoenixと連動させるときのElmの管理方法は二つあります。
 Phoenixのアプリケーションの内部で管理するか外部で管理するかのどちらかになります。
 結局は、ElmのソースをビルドしてまとめたjsをPhoenixに持ってくるので、
-一人でやるなら別段代わりはありません。意識することがあるとすれば複数人で編集しているときでしょう。
-それもGitが大概の場合うまいことやってくれるでしょうが。
+一人でやるなら別段代わりはありません。意識することがあるとすれば複数人で開発しているときでしょう。
+それでもGitが大概の場合うまいことやってくれるでしょうが。
 本書では、Phoenixアプリケーションの内部で管理するように構築していきます。
 
 それでは、Elmのディレクトリを作りましょう。
 
 ```cmd
-$ mkdir assets/vendor/elm
-$ cd assets/lib/elm
+$ mkdir assets/elm
+$ cd assets
 $ elm make
 Some new packages are needed. Here is the upgrade plan.
 
@@ -156,9 +156,6 @@ Starting downloads...
   ● elm-lang/core 5.1.1
 Packages configured successfully!
 Success! Compiled 37 modules.
-
-$ mkdir src
-$ mkdir output
 ```
 
 先ほど、作成したディレクトリがソースディレクトリとなるように設定を変更します。
@@ -171,7 +168,7 @@ $ mkdir output
     "repository": "https://github.com/user/project.git",
     "license": "BSD3",
     "source-directories": [
-        "src"
+        "elm"
     ],
     "exposed-modules": [],
     "dependencies": {
@@ -183,6 +180,7 @@ $ mkdir output
 ```
 
 続けて、brunchの設定を行なっていきます。
+(elm home = elm makeしたディレクトリ)
 
 ```javascript
 [assets/brunch-config.js]
@@ -193,12 +191,10 @@ exports.config = {
   // Configure your plugins
   plugins: {
     elmBrunch: {
-      // brunch-config.js root relative path
-      elmFolder: "./vendor/elm",
-      // elm directory relative path
-      mainModules: ["src/Web.elm"],
-      // elm directory relative path
-      outputFolder: "./output"
+      // elm home relative path
+      mainModules: ["elm/Web.elm"],
+      outputFolder: "js"
+      outputFile: "elm.js"
     },
     ...
   },
@@ -214,39 +210,77 @@ Elmのメインモジュールを作成していきましょう。
 ```elm
 [assets/vendor/elm/src/Web.elm]
 
-```
+module Web exposing (main)
 
-ModelとMessageのモジュールは自分で作らないといけないので作成します。
+-- Elm module import
+import Html exposing (div, h2, text)
 
-```elm
-[assets/vendor/elm/Model.elm]
-
-```
-
-```elm
-[assets/vendor/elm/Message.elm]
+-- main
+main =
+  div [] [ h2 [] [ text "Hello, elm!" ] ]
 
 ```
 
-それではElmのビルドをしてみましょう。
+それではElmのソースをビルドをしてみましょう。
 
 ```cmd
 $ elm make src/Web.elm 
-Success! Compiled 3 modules.                                        
+Success! Compiled 1 modules.                                        
 Successfully generated index.html
 ```
 
+brunchのビルド
+手動でやる必要はないが、elm.jsが正常に出力されることを確認するため。
+ここら辺はPhoenixのReloaderが上手いことやってくれる。(やってくれない時もある)
+
+```cmd
+$ cd assets
+$ brunch build
+$ ls js
+```
+
+assets/js配下にelm.jsができていれば問題ない。
+続けて、assets/js/app.jsにelmを埋めこむための定数を作成する。
+また、先ほどのelm.jsをimportする。
+
 ```javacrprit
 [assets/js/app.js]
+
+import "phoenix_html"
+
+// import elm.js
+import Elm from "./elm.js"
+
+// Elm embed
+const elmDiv = document.getElementById('elm-main')
+    , elmApp = Elm.Web.embed(elmDiv)
 
 ```
 
 ```html
 [lib/phoenix_tutorial_with_elm_web/templates/page/index.html.eex]
 
+<div class="jumbotron">
+  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
+  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
+</div>
+
+<div id="elm-main"></div>
+
+...
+```
+
+さて動かして、「Hello, Elm」が表示されているか確認してみよう。
+
+```cmd
+$ cd path/to/app
+$ mix phx.server
+elmがコンパイルされた文言が出る
 ```
 
 ## Extract
 
 構築だけで疲れましたか？私はこの部分を書いているときに疲れていました(笑)
+
+リローダの説明
 
