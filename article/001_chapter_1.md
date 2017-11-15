@@ -2,7 +2,7 @@
 
 何はともあれ、開発環境を作っていきましょう。
 
-## Install Language & DB
+## Install
 
 まずは各言語をHomebrewを使って入れていきます。め、面倒臭いわけじゃないんだからね！
 
@@ -16,6 +16,11 @@ $ erl +V
 $ elixir -v
 $ node -v
 $ elm -v
+
+$ mix local.hex
+$ mix local.rebar
+$ mix local.phx
+$ mix local.phoenix
 ```
 
 次はPostgreSQLのインストールです。め、面倒臭い！
@@ -278,9 +283,9 @@ $ mix phx.server
 elmがコンパイルされた文言が出る
 ```
 
-## Extract
+## Extra
 
-構築だけで疲れましたか？私はこの部分を書いているときに疲れていました(笑)
+構築だけで疲れましたか？私もこの部分を書いているだけで疲れました(笑)
 
-リローダの説明
+phxリローダの説明
 
