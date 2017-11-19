@@ -1,4 +1,6 @@
-# Building dev-env
+# Chapter 1 - Building dev environments
+
+## Overview
 
 開発環境を構築する一例を示します。
 今更な内容ですので、Elmとの連携部分以外は軽く何をやっているか程度の説明しかしません。
