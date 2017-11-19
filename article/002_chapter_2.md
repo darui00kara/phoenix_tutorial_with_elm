@@ -14,7 +14,7 @@
 
 ### About Help Contact
 
-```cod
+```cmd
 []
 
 ```

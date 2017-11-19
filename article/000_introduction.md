@@ -73,7 +73,7 @@ Github: https://github.com/darui00kara/phoenix_tutorial_with_elm
 
 ## Acknowledgments
 
-本書の存在は、Elixir言語とPhoenixフレームワーク、Elm-Langがなければ作る事さえなかったものです。
+本書の存在は、Elixir-LangとPhoenix-Framework、Elm-Langがなければ作る事さえなかったものです。
 José Valim氏とChris McCord氏、Evan Czaplicki氏へは敬意を表すると共に感謝を捧げたいと思います。  
 また本書のパクリ元・・・もとい参考にさせていただいたRuby on Rails Tutorialの作者様、
 日本語訳を行なっている訳者様方にも敬意と感謝を捧げます。
