@@ -18,7 +18,8 @@ Elmのライフライクルについて
 
 ## Elm HTML
 
-ElmのHTMLを変更してみる。
+ElmのHtml.programを利用する。
+フラグありについても説明だけ。(初期化時に初期値を外部から与えられるようになる)
 
 ## Main model & message module
 
