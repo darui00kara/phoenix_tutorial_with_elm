@@ -7795,14 +7795,6 @@ var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
 
-var _user$project$Message$Nothing = {ctor: 'Nothing'};
-
-var _user$project$Model$Model = F2(
-	function (a, b) {
-		return {isDebug: a, message: b};
-	});
-var _user$project$Model$new = A2(_user$project$Model$Model, false, _elm_lang$core$Maybe$Nothing);
-
 var _user$project$Web$main = _elm_lang$virtual_dom$Native_VirtualDom.staticProgram(
 	A2(
 		_elm_lang$html$Html$div,

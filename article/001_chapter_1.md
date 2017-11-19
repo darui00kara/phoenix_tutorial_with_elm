@@ -1,4 +1,6 @@
-# Building dev-env
+# Chapter 1 - Building dev environments
+
+## Overview
 
 開発環境を構築する一例を示します。
 今更な内容ですので、Elmとの連携部分以外は軽く何をやっているか程度の説明しかしません。
@@ -60,7 +62,7 @@ postgres=# \du (バックスラッシュdu)
 
 ## Create new phoenix application
 
-新しいPhoenixのプロジェクトを作成しましょう。
+新しいPhoenixのアプリケーションを作成しましょう。
 
 ```cmd
 $ mix phx.new toy_app
@@ -88,19 +90,22 @@ $ git add -A
 
 $ git status
 
-$ git commit -m "[Add] Create application"
+$ git commit -m "Create phoenix application"
 
 $ git remote add origin https://github.com/[your github account]/toy_app.git
 
 $ git push -u origin master
-
-[Supplement]
 ```
 
 ## With Elm
 
-この章で取り扱いたい本題です。
-PhoenixとElmを連携させます。  
+この章で取り扱いたい本題です。PhoenixとElmを連携させます。
+Gitを使っているので、せっかくですしブランチを切りましょうか。
+
+```cmd
+$ git checkout -b chapter_1
+$ git branch
+```
 
 Elmについてはnpmでインストールしました。
 あれだけでも動かすだけプログラムや設定を作ることもできるのですが、
@@ -199,7 +204,7 @@ $ mkdir assets/elm
 以降、下記のように呼称します。
 文中に出現した場合は適宜読み替えてください。
 
-- ElmHome = `elm make`を実施したディレクトリ
+- ElmHome = `elm make`を実行したディレクトリ
 - ElmSrc = `assets/elm`ディレクトリ
 
 続けて、Phoenixのbrunch-configへ設定の追加を行います。
@@ -335,17 +340,37 @@ elmがコンパイルされた文言が出る
 -> Let's accsess: http://localhost:4000
 ```
 
+## Commit
+
+本当は細かくaddとcommitをした方がいいのでしょうけど、ここでは最後だけです。
+次章からは細かくcommitもしていきます。
+
+```cmd
+$ git status
+
+$ git add -A
+
+$ git status
+
+$ git commit -m "Finish create phoenix and elm environments"
+
+$ git push -u origin chapter_1
+```
+
+私は面倒臭がりで忘れやすいので、自分だけなら大体最初と最後しかコミットしないのですが、
+本当は、ちゃんとやった方がいいのでしょうね・・・(面倒臭い)
+
 ## Extra
 
 次の章に進む前の選択肢です。参考にしてください。
 
 ```txt
 +----------------------------------------------------------+
-|                                                          |
-| この本はクソだよ！         -> Sorry...close this book... |
-| もう少しだけ続けてやるよ   -> Please next chapter        |
-| こんな本が欲しかったんだ！ -> Thanks! Let's next chapter |
-|                                                          |
+|
+| この本はクソだよ！         -> Sorry...close this book...
+| もう少しだけ続けてやるよ   -> Please next chapter
+| こんな本が欲しかったんだ！ -> Thanks! Let's next chapter
+|
 +----------------------------------------------------------+
 ```
 
